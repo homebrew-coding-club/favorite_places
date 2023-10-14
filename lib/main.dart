@@ -1,5 +1,4 @@
 import 'package:favorite_places/screen/places.dart';
-import 'package:favorite_places/widget/places_list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
