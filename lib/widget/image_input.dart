@@ -22,7 +22,10 @@ class _ImageInputState extends State<ImageInput> {
       return;
     }
 
-    _selectedImage = File(pickImage.path);
+    setState(() {
+      _selectedImage = File(pickImage.path);
+    });
+
   }
 
   @override
