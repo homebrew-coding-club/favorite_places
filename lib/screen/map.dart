@@ -10,7 +10,7 @@ class MapScreen extends StatefulWidget {
       longitude: -122.084,
       address: '',
     ),
-    required this.isSelected,
+    this.isSelected = true,
   });
 
   final PlaceLocation location;
@@ -36,16 +36,22 @@ class _MapScreenState extends State<MapScreen> {
               icon: const Icon(
                 Icons.save,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop(
+                  _pickLocation,
+                );
+              },
             )
         ],
       ),
       body: GoogleMap(
-          onTap: (position) {
-            setState(() {
-              _pickLocation = position;
-            });
-          },
+          onTap: !widget.isSelected
+              ? null
+              : (position) {
+                  setState(() {
+                    _pickLocation = position;
+                  });
+                },
           initialCameraPosition: CameraPosition(
             target: LatLng(
               widget.location.latitude,
@@ -53,16 +59,18 @@ class _MapScreenState extends State<MapScreen> {
             ),
             zoom: 16,
           ),
-          markers: (_pickLocation == null && widget.isSelected) ? {} :  {
-            Marker(
-              markerId: const MarkerId('m1'),
-              position: _pickLocation ??
-                  LatLng(
-                    widget.location.latitude,
-                    widget.location.longitude,
+          markers: (_pickLocation == null && widget.isSelected)
+              ? {}
+              : {
+                  Marker(
+                    markerId: const MarkerId('m1'),
+                    position: _pickLocation ??
+                        LatLng(
+                          widget.location.latitude,
+                          widget.location.longitude,
+                        ),
                   ),
-            ),
-          }),
+                }),
     );
   }
 }
